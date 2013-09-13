@@ -105,20 +105,21 @@ public class MainActivity extends Activity {
     	public ListAdapter(Context context, int textViewResourceId, ArrayList<Question> qList)
     	{
     		super(context,textViewResourceId, qList);
-    		questions = qList;
+    		questions = qList; 		
     	}
     	
     	public View getView(int position, View convertView, ViewGroup parent)
     	{
     		View v = convertView;
     		
+			
     		if(v == null)
     		{
     			//inflate new question row
     			LayoutInflater vi = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     			v = vi.inflate(R.layout.list_row, null, false);
-    		}
-    		
+    		}  		 		
+			
     		//get Question object
     		Question question = questions.get(position);
     		
@@ -197,7 +198,7 @@ public class MainActivity extends Activity {
 		protected void onPostExecute(ArrayList<Question> quiz) 
 		{		       
 	       
-	       MainActivity.myQuizList = quiz;
+	       MainActivity.myQuizList = quiz;	      
 	       	       
 	       //sets my listAdapter to the list
 	       	listAdapter = new ListAdapter(thisActivity,R.layout.list_row,myQuizList);
@@ -225,10 +226,11 @@ public class MainActivity extends Activity {
 					}
 				}
 	        });
-	        
+			
 	        //dismiss the progress dialog
 	        if(progressDialog != null)
-	        	progressDialog.dismiss();
+	        	progressDialog.dismiss();        
+	        
 		}
 	}
 
