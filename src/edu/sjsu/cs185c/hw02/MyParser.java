@@ -8,6 +8,7 @@ package edu.sjsu.cs185c.hw02;
 import java.util.ArrayList;
 import org.xml.sax.Attributes;
 
+
 /**
  * 
  * @author Parnit Sainion
@@ -35,7 +36,7 @@ public class MyParser extends BasicHandler
     public void startElement(String uri, String name, String qName, Attributes atts) {       
     	//If this answer is the correct choice, store teh data
     	if ("true".equals(atts.getValue("value")))
-           question.correctChoice = question.choices.size(); 
+           question.setCorrectChoice( question.numberOfChoices()); 
     	
     	//initialize a new quiz
     	if("quiz".equals(name)) {
@@ -47,6 +48,8 @@ public class MyParser extends BasicHandler
             question = new Question();
             inItem = true;
         } else if("text".equals(name) && inItem) {
+            buffer = new StringBuffer();
+        } else if("answered".equals(name) && inItem) {
             buffer = new StringBuffer();
         } else if("choice".equals(name) && inItem) {
             buffer = new StringBuffer();
@@ -62,9 +65,14 @@ public class MyParser extends BasicHandler
             inItem = false;
             
         } else if("text".equals(name) && inItem) {
-            question.text = buffer.toString();
+        	//sets Question text
+            question.setQuestion(buffer.toString());
+        } else if("answered".equals(name) && inItem) {
+        	//sets answered status of question
+            question.setAnswered(Integer.parseInt(buffer.toString()));
         } else if("choice".equals(name) && inItem) {
-            question.choices.add(buffer.toString());
+        	//adds answer choice to list of answers
+            question.addChoice(buffer.toString());
         }
         buffer = null;
     }
@@ -78,5 +86,5 @@ public class MyParser extends BasicHandler
                 buffer.append(ch[i]);
             }
         }
-    }
+    }    
 }

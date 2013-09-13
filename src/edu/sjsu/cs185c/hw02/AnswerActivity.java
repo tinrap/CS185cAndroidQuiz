@@ -37,7 +37,8 @@ public class AnswerActivity extends Activity
 		//retrieves the questions
 		Intent intent = getIntent();
 		selectedQuestion = (Question) intent.getSerializableExtra("question");
-		correctAnswer = selectedQuestion.correctChoice;
+		final int selectedPosition = intent.getIntExtra( "selectedPosition",101);
+		correctAnswer = selectedQuestion.getCorrectChoice();
 		
 		//gets the listview
 		myListView = (ListView) findViewById(R.id.answer_list);
@@ -45,16 +46,16 @@ public class AnswerActivity extends Activity
         
 	    //Sets the question textview
 	    questionText = (TextView) findViewById(R.id.questionText);
-	    questionText.setText(selectedQuestion.text);
+	    questionText.setText(selectedQuestion.getQuestion());
 	    
 	    //sets the answers choices list and adds them to the adapter
-	    List<String> choices= selectedQuestion.choices;	    
+	    List<String> choices= selectedQuestion.getChoices()	;    
 	    int size =choices.size();
 	    for(int i=0;i<size;i++)
 	    {
 	    	myAdapter.add(choices.get(i).toString());
 	    }
-        myListView.setAdapter(myAdapter);
+        myListView.setAdapter(myAdapter);;
         
         //OnClickListener is set for the list
         myListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {           
@@ -62,8 +63,17 @@ public class AnswerActivity extends Activity
 			public void onItemClick(AdapterView<?> arg0, View view, int position,
 					long id) {
 				// intent returns the chosen answer to the callign activity
-				Intent intent=new Intent();				
-			    intent.putExtra("chosenAnswer", position==correctAnswer);
+				Intent intent=new Intent();	
+				if(position==correctAnswer)
+					selectedQuestion.setAnswered(1);
+				else
+					selectedQuestion.setAnswered(2);
+				
+				if(position==correctAnswer)
+					intent.putExtra("chosenAnswer", 1);
+				else
+					intent.putExtra("chosenAnswer", 2);
+			    intent.putExtra("position", selectedPosition);
 			    setResult(RESULT_OK, intent);
 			    finish();
 			}
