@@ -6,5 +6,6 @@
     <string name="menu_settings">Settings</string>
     <string name="question">Question</string>
     <string name="error">Could not get Quiz. Please try again later.</string>
+    <string name="empty"></string>
 
 </resources>

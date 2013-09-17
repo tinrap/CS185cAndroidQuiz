@@ -76,21 +76,26 @@ public class MainActivity extends Activity {
 	@Override
     public void onActivityResult(int requestCode,int resultCode,Intent data)
     {
-     super.onActivityResult(requestCode, resultCode, data);
-     
-     
-     	int answer = data.getIntExtra("chosenAnswer", 3);   
-     	int position =data.getIntExtra("position", 101);
-     	
-     	//gets the question that was answered from list of questions
-     	Question question = myQuizList.get(position);
-     	
-     	//changes the status of question to correct or incorrect
-     	question.setAnswered(answer);
-     	
-     	//updates GUI to reflect changes
-     	listAdapter.notifyDataSetChanged();     	
+		super.onActivityResult(requestCode, resultCode, data);  
 		
+		//checks if data is not null (in case user pressed back)
+		if(data != null)
+		{
+			int answer = data.getIntExtra("chosenAnswer", 3);   
+	     	int position =data.getIntExtra("position", 101);
+	     	
+	     	if(position != 101)
+	     	{
+	     		//gets the question that was answered from list of questions
+	         	Question question = myQuizList.get(position);
+	         	
+	         	//changes the status of question to correct or incorrect
+	         	question.setAnswered(answer);
+	         	
+	         	//updates GUI to reflect changes
+	         	listAdapter.notifyDataSetChanged();
+	     	}
+		}		
     }
 	
 	/**
@@ -227,9 +232,18 @@ public class MainActivity extends Activity {
 				}
 	        });
 			
+	        //Set Screen error message is quiz is not populated
+	        if(myQuizList != null &&myQuizList.size()<=0)
+	        {
+	        	TextView errorMessage = (TextView) findViewById(R.id.errorScreen);
+	        	errorMessage.setText("Could not get Quiz. Please try again later.");
+	        }
+	        
 	        //dismiss the progress dialog
 	        if(progressDialog != null)
-	        	progressDialog.dismiss();        
+	        	{
+	        		progressDialog.dismiss();        
+	        	}
 	        
 		}
 	}

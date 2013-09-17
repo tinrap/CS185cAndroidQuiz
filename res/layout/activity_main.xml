@@ -16,7 +16,7 @@
 	    android:id="@+id/errorScreen"
 	    android:layout_width="fill_parent"
 	    android:layout_height="fill_parent"
-	    android:text="@string/error"
+	    android:text="@string/empty"
 	    android:textSize="33sp"
 	    android:textColor="#337733"
 	    android:gravity="center"/>
