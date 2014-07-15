@@ -19,7 +19,7 @@ import android.widget.TextView;
 /**
  * 
  * @author Parnit Sainion
- * @description The AnswerActivity displayed a question and choices and allows the user to choose and answer
+ * @description The AnswerActivity displays a question and choices and allows the user to choose and answer
  */
 public class AnswerActivity extends Activity 
 {
